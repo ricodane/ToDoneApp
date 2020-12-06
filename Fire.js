@@ -57,8 +57,12 @@ class Fire {
 
     updateList(list) {
         let ref = this.ref;
-
         ref.doc(list.id).update(list);
+    }
+
+    deleteList(list){
+        let ref = this.ref;
+        ref.doc(list.id).delete();
     }
 
     get userId() {
@@ -76,6 +80,6 @@ class Fire {
     detach() {
         this.unsubscribe();
     }
-}
+};
 
 export default Fire;

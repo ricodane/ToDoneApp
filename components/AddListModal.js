@@ -57,10 +57,10 @@ export default class AddListModal extends React.Component {
           <AntDesign name="close" size={24} color={colors.black} />
         </TouchableOpacity>
         <View style={{ alignSelf: "stretch", marginHorizontal: 32 }}>
-          <Text style={styles.title}>Create Todo List</Text>
+          <Text style={styles.title}>Create ToDo List</Text>
           <TextInput
             style={styles.input}
-            placeholder="List Name?"
+            placeholder="List name"
             onChangeText={(text) => this.setState({ name: text })}
           />
           <View
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: "800",
     color: colors.black,
     alignSelf: "center",

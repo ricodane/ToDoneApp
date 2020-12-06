@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, Keybo
 import {AntDesign, Ionicons} from '@expo/vector-icons';
 import colors from "../Colors";
 import {Swipeable} from 'react-native-gesture-handler';
+import {SwipeListView} from 'react-native-swipe-list-view';
 
 export default class TodoModal extends React.Component {
     state = {
@@ -59,10 +60,8 @@ export default class TodoModal extends React.Component {
                         color: todo.completed ? colors.gray : colors.black,
                         },
                     ]}
-                        
                 >
                             {todo.title}
-                        
                 </Text>
             </View>
             </Swipeable>

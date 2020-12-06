@@ -18,6 +18,10 @@ export default class TodoList extends React.Component {
     const completedCount = list.todos.filter((todo) => todo.completed).length;
     const remainingCount = list.todos.length - completedCount;
 
+    renderList = list => {
+      return <TodoList list={list} updateList={this.updateList} deleteList={this.deleteList} />
+    };
+
     return (
         <View>
             <Modal 
@@ -31,8 +35,9 @@ export default class TodoList extends React.Component {
                 updateList={this.props.updateList} 
                 />
             </Modal>
-            <TouchableOpacity style={[styles.listContainer, { backgroundColor: list.color }]} 
-            onPress={() => this.toggleListModal()}>
+            <TouchableOpacity style={[styles.listContainer, { backgroundColor: list.color }]}
+            onPress={() => this.toggleListModal()}
+            onLongPress={() => this.props.deleteList(list)}>
                 <Text style={styles.listTitle} numberOfLines={1}>
                 {list.name}
                 </Text>
@@ -51,11 +56,8 @@ export default class TodoList extends React.Component {
             </TouchableOpacity>
         </View>
         
-      );
+        );
   }
-
-
- 
 };
 
 const styles = StyleSheet.create({

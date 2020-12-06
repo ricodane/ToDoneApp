@@ -48,7 +48,7 @@ export default class App extends React.Component {
   }
 
   renderList = list => {
-    return <TodoList list={list} updateList={this.updateList} />;
+    return <TodoList list={list} updateList={this.updateList} deleteList={this.deleteList}/>;
   };
 
   addList = list => {
@@ -63,6 +63,10 @@ export default class App extends React.Component {
     firebase.updateList(list);
   };
 
+  deleteList = list => {
+    firebase.deleteList(list);
+  };
+  
   render() {
     if (this.state.loading) {
       return (
@@ -85,8 +89,8 @@ export default class App extends React.Component {
         <View style={{ flexDirection: "row" }}>
           <View style={styles.divider} />
           <Text style={styles.title}>
-            Todo{" "}
-            <Text style={{ fontWeight: "300", color: colors.blue }}>Lists</Text>
+             To 
+            <Text style={{ fontWeight: "400", fontStyle:"italic", color: colors.blue }}>Done</Text>
           </Text>
           <View style={styles.divider} />
         </View>
@@ -122,16 +126,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   divider: {
-    backgroundColor: colors.lightBlue,
+    backgroundColor: colors.black,
     height: 1,
     flex: 1,
     alignSelf: "center",
   },
   title: {
     fontSize: 38,
-    fontWeight: "800",
+    fontWeight: "700",
     color: colors.black,
-    paddingHorizontal: 64,
+    fontStyle: "italic",
+    paddingHorizontal: 40,
   },
   addList: {
     borderWidth: 2,
