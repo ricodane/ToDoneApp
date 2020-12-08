@@ -1,6 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Modal } from "react-native";
 import Colors from "../Colors";
+import colors from "../Colors";
+import {AntDesign, Ionicons} from '@expo/vector-icons';
 import TodoModal from './TodoModal'
 
 export default class TodoList extends React.Component {
@@ -18,7 +20,7 @@ export default class TodoList extends React.Component {
     const completedCount = list.todos.filter((todo) => todo.completed).length;
     const remainingCount = list.todos.length - completedCount;
 
-    renderList = list => {
+    let renderList = list => {
       return <TodoList list={list} updateList={this.updateList} deleteList={this.deleteList} />
     };
 
@@ -36,8 +38,10 @@ export default class TodoList extends React.Component {
                 />
             </Modal>
             <TouchableOpacity style={[styles.listContainer, { backgroundColor: list.color }]}
-            onPress={() => this.toggleListModal()}
-            onLongPress={() => this.props.deleteList(list)}>
+              onPress={() => this.toggleListModal()}>
+            
+             
+
                 <Text style={styles.listTitle} numberOfLines={1}>
                 {list.name}
                 </Text>
@@ -53,11 +57,20 @@ export default class TodoList extends React.Component {
                   <Text style={styles.subtitle}>Completed</Text>
                 </View>
                 </View>
+
+                <TouchableOpacity style={{position: 'absolute', bottom:20, right: 20, zIndex:10}}
+                  accessible={true}
+                  accessibilityLabel="Delete!"
+                  onPress= {() => this.props.deleteList(list)}>
+                  <View style={styles.button}>
+                  <AntDesign name="delete" size={24} color = {colors.white}/>
+                    </View>
+                </TouchableOpacity>
             </TouchableOpacity>
         </View>
         
         );
-  }
+  };
 };
 
 const styles = StyleSheet.create({

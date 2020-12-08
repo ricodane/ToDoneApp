@@ -3,11 +3,11 @@ import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, Keybo
 import {AntDesign, Ionicons} from '@expo/vector-icons';
 import colors from "../Colors";
 import {Swipeable} from 'react-native-gesture-handler';
-import {SwipeListView} from 'react-native-swipe-list-view';
 
 export default class TodoModal extends React.Component {
     state = {
         newTodo: ""
+    
     };
 
     toggleTodoCompleted = index => {
@@ -21,10 +21,9 @@ export default class TodoModal extends React.Component {
     addTodo = () => {
         let list = this.props.list;
 
-        if (!list.todos.some(todo => todo.title === this.state.newTodo)) {
+        if ( ! list.todos.some(todo => todo.title === this.state.newTodo || this.state.newTodo === "" )) {
             list.todos.push({title: this.state.newTodo, completed:false});
             
-
             this.props.updateList(list);
         }
 
@@ -40,30 +39,62 @@ export default class TodoModal extends React.Component {
         this.props.updateList(list);
     };
 
+    editTodo = title => {
+        let list = this.props.list;
+
+        if ( ! list.todos.some(todo => todo.title === this.state.newTodo || this.state.newTodo === "" )) {
+            list.todos.push({title: this.state.newTodo, completed:false});
+
+        this.props.updateList(list);
+    }
+
+    this.setState({newTodo: "" });
+    Keyboard.dismiss();
+
+};
+
     renderTodo = (todo, index) => {
         return (
             <Swipeable renderRightActions={(_, dragX) => this.rightActions(dragX, index)}>
-            <View style={styles.todoContainer}>
-                <TouchableOpacity onPress={() => this.toggleTodoCompleted(index)}>
-                    <Ionicons 
-                     name={todo.completed ? 'ios-square' : 'ios-square-outline'}
-                     size={24} 
-                     color={colors.gray} 
-                     style={{width: 32}} 
-                    />
-                </TouchableOpacity>
+                <View style={styles.todoContainer}>
+                    <TouchableOpacity 
+                        onPress={() => this.toggleTodoCompleted(index)}>
+                        <Ionicons 
+                        name={todo.completed ? 'ios-square' : 'ios-square-outline'}
+                        size={24} 
+                        color={colors.gray} 
+                        style={{width: 32}} 
+                        />
+                    </TouchableOpacity>
+                    
+                    <Text 
+                        style = {[
+                            styles.todo, 
+                            { textDecorationLine: todo.completed ? "line-through" : 'none', 
+                            color: todo.completed ? colors.gray : colors.black,
+                            },
+                        ]}
+                    >
+                                {todo.title}
+                    </Text>
+                    <TouchableOpacity style={{position: 'absolute', top:20, right: 60, zIndex:10}}
+                        accessible={true}
+                        accessibilityLabel="Delete!"
+                        onPress= {() => this.deleteTodo(index)}>
+                        <View style={styles.button}>
+                        <AntDesign name="delete" size={24} color = {colors.black}/>
+                        </View>
+                    </TouchableOpacity>
 
-                <Text 
-                    style = {[
-                        styles.todo, 
-                        { textDecorationLine: todo.completed ? "line-through" : 'none', 
-                        color: todo.completed ? colors.gray : colors.black,
-                        },
-                    ]}
-                >
-                            {todo.title}
-                </Text>
-            </View>
+                    <TouchableOpacity style={{position: 'absolute', top:20, right: 32, zIndex:10}}
+                        accessible={true}
+                        accessibilityLabel="Edit!"
+                        onPress= {() => this.editTodo(index)}>
+                        <View style={styles.button}>
+                        <AntDesign name="edit" size={24} color = {colors.black}/>
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </Swipeable>
         );
     };
@@ -79,17 +110,7 @@ export default class TodoModal extends React.Component {
             inputRange: [-100, -20, 0],
             outputRange: [1, 0.9, 0],
             extrapolate: "clamp"
-        })
-
-        return (
-            <TouchableOpacity onPress={() => this.deleteTodo(index) }>
-                <Animated.View style={styles.deleteButton, { opacity: opacity }}>
-                    <Animated.Text style={{color: colors.white, fontWeight: "800", transform: [{ scale }] }}>
-                        Delete
-                    </Animated.Text>
-                </Animated.View>
-            </TouchableOpacity>
-        );
+        });
     };
 
     render () {
@@ -138,8 +159,8 @@ export default class TodoModal extends React.Component {
                 </SafeAreaView>
             </KeyboardAvoidingView>
         );
-    }
-}
+    };
+};
 
 const styles = StyleSheet.create ({
     container: {

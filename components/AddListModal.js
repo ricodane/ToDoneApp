@@ -12,13 +12,13 @@ import colors from "../Colors";
 
 export default class AddListModal extends React.Component {
   backgroundColors = [
-    "#5CD859",
-    "#24A6D9",
-    "#595DB9",
-    "#8022D9",
-    "#D159D8",
-    "#D85963",
-    "#D88559",
+    "#9A3232",
+    "#80D240",
+    "#9240D2",
+    "#40D2AF",
+    "#4072D2",
+    "#D3AA40",
+    "#37C345",
   ];
   state = {
     name: "",
@@ -58,11 +58,11 @@ export default class AddListModal extends React.Component {
         </TouchableOpacity>
         <View style={{ alignSelf: "stretch", marginHorizontal: 32 }}>
           <Text style={styles.title}>Create ToDo List</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="List name"
-            onChangeText={(text) => this.setState({ name: text })}
-          />
+            <TextInput
+              style={styles.input}
+              placeholder="List name"
+              onChangeText={(text) => this.setState({ name: text })}
+            />
           <View
             style={{
               flexDirection: "row",

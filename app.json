@@ -20,13 +20,12 @@
       "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
-    },
+      "package": "uic.edu.ph",
+      "versionCode": 1
+    }
+  },
     "web": {
       "favicon": "./assets/favicon.png"
     }
   }
-}
+

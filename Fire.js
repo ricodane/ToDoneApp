@@ -39,7 +39,7 @@ class Fire {
         let ref = this.ref.orderBy("name");
 
             this.unsubscribe = ref.onSnapshot(snapshot => {
-                lists = [];
+                let lists = [];
 
                 snapshot.forEach(doc => {
                     lists.push({ id: doc.id, ...doc.data() });
@@ -63,6 +63,11 @@ class Fire {
     deleteList(list){
         let ref = this.ref;
         ref.doc(list.id).delete();
+    }
+
+    editList(list){
+        let ref = this.ref;
+        ref.doc(list.id).edit(list);
     }
 
     get userId() {

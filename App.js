@@ -15,14 +15,17 @@ import TodoList from "./components/TodoList";
 import AddListModal from "./components/AddListModal";
 import Fire from './Fire';
 
+let firebase;
+
 export default class App extends React.Component {
+
   state = {
     addTodoVisible: false,
     lists: [],
     user: {},
     loading: true
   };
-
+  
   componentDidMount() {
     firebase = new Fire((error, user) => {
       if (error) {
@@ -66,6 +69,10 @@ export default class App extends React.Component {
   deleteList = list => {
     firebase.deleteList(list);
   };
+
+  editList = list => {
+    firebase.editList(list);
+  };
   
   render() {
     if (this.state.loading) {
@@ -88,10 +95,10 @@ export default class App extends React.Component {
         
         <View style={{ flexDirection: "row" }}>
           <View style={styles.divider} />
-          <Text style={styles.title}>
-             To 
-            <Text style={{ fontWeight: "400", fontStyle:"italic", color: colors.blue }}>Done</Text>
-          </Text>
+            <Text style={styles.title}>
+              To 
+              <Text style={{ fontWeight: "400", fontStyle:"italic",  color: "#3E3E3E" }}>Done</Text>
+            </Text>
           <View style={styles.divider} />
         </View>
         <View style={{ marginVertical: 48 }}>
@@ -134,7 +141,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 38,
     fontWeight: "700",
-    color: colors.black,
+    color: "#0592A5",
     fontStyle: "italic",
     paddingHorizontal: 40,
   },
