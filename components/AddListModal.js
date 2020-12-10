@@ -6,6 +6,7 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   TextInput,
+  Platform
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../Colors";
@@ -25,15 +26,19 @@ export default class AddListModal extends React.Component {
     color: this.backgroundColors[0],
   };
 
+
+
   createTodo = () => {
-    const { name, color } = this.state;
-
-    const list = {name, color}
-
+    let { name, color } = this.state;
+    let list = {name, color}
+    
+    if (name === this.state.name || this.state.name === "" ) {
+        
     this.props.addList(list);
-
+   }
     this.setState({ name: "" });
     this.props.closeModal();
+    
   };
 
   renderColors() {
@@ -49,7 +54,7 @@ export default class AddListModal extends React.Component {
   }
   render() {
     return (
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <KeyboardAvoidingView style={styles.container} behavior={Platform.OS == "ios" ? "padding" : "null"}>
         <TouchableOpacity
           style={{ position: "absolute", top: 64, right: 32 }}
           onPress={this.props.closeModal}
@@ -75,6 +80,7 @@ export default class AddListModal extends React.Component {
           <TouchableOpacity
             style={[styles.create, { backgroundColor: this.state.color }]}
             onPress={this.createTodo}
+            value={this.state.name}
           >
             <Text style={{ color: colors.white, fontWeight: "600" }}>
               Create!
@@ -83,8 +89,8 @@ export default class AddListModal extends React.Component {
         </View>
       </KeyboardAvoidingView>
     );
-  }
-}
+  };
+};
 
 const styles = StyleSheet.create({
   container: {

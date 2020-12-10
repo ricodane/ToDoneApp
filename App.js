@@ -7,6 +7,7 @@ import {
   FlatList,
   Modal,
   ActivityIndicator,
+  Image,
   ListViewComponent,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
@@ -85,6 +86,10 @@ export default class App extends React.Component {
 
     return (
       <View style={styles.container}>
+        <Image
+          style={{ width:100, height:100}}
+          source={require("./assets/Logo.jpg")}
+        />
         <Modal
           animationType="slide"
           visible={this.state.addTodoVisible}
@@ -110,14 +115,15 @@ export default class App extends React.Component {
           </TouchableOpacity>
           <Text style={styles.add}>Add List</Text>
         </View>
-        <View style={{ height: 275, paddingLeft: 32 }}>
+        <View style={{ height: 370, margin: 5 }}>
           <FlatList
             data={this.state.lists}
             keyExtractor={(item) => item.id.toString()}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
+            vertical={true}
+            showsVerticalScrollIndicator={true}
+            ItemSeparatorComponent={() => <View style ={{ margin: 3 }}/> }
             renderItem={({ item }) => this.renderList(item)}
-            keyboardShouldPersistTaps="always"
+            keyboardShouldPersistTaps="always "
           />
         </View>
       </View>
