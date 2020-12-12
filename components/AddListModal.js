@@ -26,16 +26,12 @@ export default class AddListModal extends React.Component {
     color: this.backgroundColors[0],
   };
 
-
-
   createTodo = () => {
     let { name, color } = this.state;
     let list = {name, color}
     
-    if (name === this.state.name || this.state.name === "" ) {
-        
     this.props.addList(list);
-   }
+   
     this.setState({ name: "" });
     this.props.closeModal();
     

@@ -1,10 +1,8 @@
 import React from "react";
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, KeyboardAvoidingView, TextInput, Platform, Keyboard} from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, KeyboardAvoidingView, TextInput, Platform, Keyboard, Alert} from "react-native";
 import {AntDesign, Ionicons} from '@expo/vector-icons';
 import colors from "../Colors";
 import {Swipeable} from 'react-native-gesture-handler';
-
-
 
 export default class TodoModal extends React.Component {    
     state = {
@@ -21,20 +19,52 @@ export default class TodoModal extends React.Component {
 
     addTodo = () => {
         let list = this.props.list;
-
-        if ( ! list.todos.some(todo => todo.title === this.state.newTodo || this.state.newTodo === "" )) {
-            list.todos.push({title: this.state.newTodo, completed:false});
-            
-            this.props.updateList(list);
+        if (this.state.newTodo === "") {
+          Alert.alert(
+            "Warning!!!",
+            "No Input Found!",
+            [
+              {
+                text: "Cancel",
+                onPress: () => "",
+                style: "cancel",
+              },
+            ],
+            { cancelable: false }
+          );
+        } else if (!list.todos.some((todo) => todo.title == this.state.newTodo)) {
+          list.todos.push({ title: this.state.newTodo, completed: false });
+          this.props.updateList(list);
+          Alert.alert(
+            "Successfully!",
+            "ADDED!",
+            [{ text: "OK", onPress: () => "" }],
+            { cancelable: false }
+          );
+        } else {
+          Alert.alert(
+            "Warning!!!",
+            "List Already Existed!",
+            [
+              {
+                text: "Cancel",
+                onPress: () => "",
+                style: "cancel",
+              },
+            ],
+            { cancelable: false }
+          );
         }
-        this.setState({newTodo: "" });
+    
+        this.setState({ newTodo: "" });
         Keyboard.dismiss();
-    };
-
+    }
     deleteTodo = index => {
         let list = this.props.list
         list.todos.splice(index, 1)
-
+        
+        Alert.alert("Your list has been deleted!")
+        
         this.props.updateList(list);
     };  
 
